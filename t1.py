@@ -16,8 +16,8 @@ def create_connection():
     conn = create_engine(f'postgresql://{username}:{password}@{host}:{port}/{db}')
     return conn
 
-def get_pd(): 
-    #ewfwefwe   
+def get_pd():     
     conn = create_connection()
-    data = pd.read_sql('select * from users_churn', conn, parse_dates=['start_date', 'end_date'])
+    #data = pd.read_sql('select * from users_churn', conn, parse_dates=['start_date', 'end_date'])
+    data = pd.read_sql('select * from clean_users_churn', conn, parse_dates=['begin_date', 'end_date'])
     return data
