@@ -1,0 +1,39 @@
+# dvc.yaml
+  # cmd – команда, запускающая шаг,
+  # deps – список зависимостей (код и результаты предыдущих шагов),
+  # params – список параметров, влияющих на результат шага,
+  # outs – результаты-объекты шага (данные и модели),
+  # metrics – результаты-метрики шага, сохранённые в файле.
+stages:
+  get_data:
+    cmd: python scripts/data.py
+    deps:
+      - scripts/data.py
+    params:
+      - index_col
+    outs:
+      - data/initial_data.csv
+  fit_model:
+    cmd: python scripts/fit.py
+    deps:
+      - data/initial_data.csv
+      - scripts/fit.py
+    params:
+      - index_col
+      - target_col
+      - one_hot_drop
+      - auto_class_weights
+    outs:
+      - models/fitted_model.pkl
+  evaluate_model:
+# Ваш код здесь #
+    cmd: python scripts/evaluate.py
+    deps:
+      - data/initial_data.csv
+      - models/fitted_model.pkl
+      - scripts/evaluate.py
+    params:
+      - index_col
+      - target_col
+    outs:
+      - metrics/metrics.json

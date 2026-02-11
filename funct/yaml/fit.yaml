@@ -1,0 +1,21 @@
+stages:
+  get_data:
+    cmd: python scripts/data.py
+    deps:
+      - scripts/data.py
+    params:
+      - index_col
+    outs:
+      - data/initial_data.csv
+  fit_model:
+    cmd: python scripts/fit.py
+    deps:
+      - data/initial_data.csv
+      - scripts/fit.py
+    params:
+      - index_col
+      - target_col
+      - one_hot_drop
+      - auto_class_weights
+    outs:
+      - models/fitted_model.pkl
