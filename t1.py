@@ -1,11 +1,13 @@
 from sqlalchemy import create_engine
 import os
 import pandas as pd
+
 from dotenv import load_dotenv
 
+load_dotenv()
 
 def create_connection():
-    load_dotenv()
+    
     host = os.environ.get('DB_DESTINATION_HOST')
     port = os.environ.get('DB_DESTINATION_PORT')
     db = os.environ.get('DB_DESTINATION_NAME')
@@ -13,6 +15,7 @@ def create_connection():
     password = os.environ.get('DB_DESTINATION_PASSWORD')
 
     print(f'postgresql://{username}:{password}@{host}:{port}/{db}')
+
     conn = create_engine(f'postgresql://{username}:{password}@{host}:{port}/{db}')
     return conn
 
