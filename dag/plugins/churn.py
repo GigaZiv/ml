@@ -69,11 +69,14 @@ def transform(**kwargs):
 
     cols_with_nans = data.isnull().sum()
     cols_with_nans = cols_with_nans[cols_with_nans > 0].index.drop('end_date')
+
     for col in cols_with_nans:
+
         if data[col].dtype in [float, int]:
-            fill_value = data[col].median() if not data[col].isna().all() else 0
+            fill_value = data[col].mean()
         elif data[col].dtype == 'object':
-            fill_value = data[col].mode().iloc[0] if not data[col].mode().empty else 'Unknown'
+            fill_value = data[col].mode().iloc[0]
+
         data[col] = data[col].fillna(fill_value)
         
     # num_cols = data.select_dtypes(['float']).columns
